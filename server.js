@@ -31,15 +31,6 @@ let guard = function(req, res, next){
     switch(req.path){
         // If the request is for movie reviews, check to see if the token has general scope
         case '/movies' : {
-            // let permissions = ['general'];
-            // for(let i = 0; i < permissions.length; i++){
-            //     if(req.user.scope.includes(permissions[i])){
-            //         next();
-            //     } else {
-            //         res.send(403, {message: 'Forbidden'});
-            //     }
-            // }
-            // break;
             GeneralPermissions();
             break;
         }
