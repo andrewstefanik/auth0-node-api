@@ -10,13 +10,13 @@ const jwtCheck = jwt({
     secret: rsaValidation(),
     algorithms: ['RS256'],
     issuer: "https://stefanik.auth0.com/",
-    audience: 'movieapi'
+    audience: 'movieapp'
 });
 
 // Enable the use of the jwtCheck middleware
 app.use(jwtCheck);
 
-function GeneralPermissions(){
+function GeneralPermissions(req, res){
     let permissions = ['general'];
     for(let i = 0; i < permissions.length; i++){
         if(req.user.scope.includes(permissions[i])){
@@ -31,15 +31,36 @@ let guard = function(req, res, next){
     switch(req.path){
         // If the request is for movie reviews, check to see if the token has general scope
         case '/movies' : {
-            GeneralPermissions();
+            let permissions = ['general'];
+            for(let i = 0; i < permissions.length; i++){
+                if(req.user.scope.includes(permissions[i])){
+                    next();
+                } else {
+                    res.send(403, {message: 'Forbidden'});
+                }
+            };
             break;
         }
         case '/reviews' : {
-            GeneralPermissions();
+            let permissions = ['general'];
+            for(let i = 0; i < permissions.length; i++){
+                if(req.user.scope.includes(permissions[i])){
+                    next();
+                } else {
+                    res.send(403, {message: 'Forbidden'});
+                }
+            };
             break;
         }
         case '/publications' : {
-            GeneralPermissions();
+            let permissions = ['general'];
+            for(let i = 0; i < permissions.length; i++){
+                if(req.user.scope.includes(permissions[i])){
+                    next();
+                } else {
+                    res.send(403, {message: 'Forbidden'});
+                }
+            };
             break;
         }
         case '/pending' : {
@@ -107,14 +128,14 @@ app.get('/reviews', function(req, res){
 app.get('/publications', function(req, res){
     // Get the list of publications
 
-    let publications = [
-        {name : 'The Daily Reviewer', avatar: 'glyphicon-eye-open'},
-        {name : 'International Movie Critic', avatar: 'glyphicon-fire'},
-        {name : 'MoviesNow', avatar: 'glyphicon-time'},
-        {name : 'MyNextReview', avatar: 'glyphicon-record'},
-        {name : 'Movies n\' Games', avatar: 'glyphicon-heart-empty'},
-        {name : 'TheOne', avatar : 'glyphicon-globe'},
-        {name : 'ComicBookHero.com', avatar : 'glyphicon-flash'}
+    var publications = [
+        {name: 'The Daily Reviewer', avatar: 'glyphicon-eye-open'},
+        {name: 'International Movie Critic', avatar: 'glyphicon-fire'},
+        {name: 'MoviesNow', avatar: 'glyphicon-time'},
+        {name: 'MyNextReview', avatar: 'glyphicon-record'},
+        {name: 'Movies n\' Games', avatar: 'glyphicon-heart-empty'},
+        {name: 'TheOne', avatar : 'glyphicon-globe'},
+        {name: 'ComicBookHero.com', avatar : 'glyphicon-flash'}
     ];
 
     // Send the list of publications as a JSON array
