@@ -16,16 +16,6 @@ const jwtCheck = jwt({
 // Enable the use of the jwtCheck middleware
 app.use(jwtCheck);
 
-function GeneralPermissions(req, res){
-    let permissions = ['general'];
-    for(let i = 0; i < permissions.length; i++){
-        if(req.user.scope.includes(permissions[i])){
-            next();
-        } else {
-            res.send(403, {message: 'Forbidden'});
-        }
-    };
-}
 let guard = function(req, res, next){
     // Use a case switch state on the route requested
     switch(req.path){
