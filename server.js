@@ -31,7 +31,7 @@ let guard = function(req, res, next){
             };
             break;
         }
-        case '/reviews' : {
+        case '/authors' : {
             let permissions = ['general'];
             for(let i = 0; i < permissions.length; i++){
                 if(req.user.scope.includes(permissions[i])){
@@ -55,12 +55,11 @@ let guard = function(req, res, next){
         }
         case '/pending' : {
             let permissions = ['admin'];
-            console.log(req.user.scope);
             for(let i = 0; i < permissions.length; i++){
                 if(req.user.scope.includes(permissions[i])){
                     next();
                 } else {
-                    res.send(403, {message: 'Forbidden'});
+                    res.status(403).send({message: 'Forbidden'});
                 }
             }
             break;
@@ -97,7 +96,7 @@ app.get('/movies', function(req, res) {
 
 // Implement the reviewers API endpoint
 
-app.get('/reviews', function(req, res){
+app.get('/authors', function(req, res){
     // Get the list of reviewers
 
     let authors = [
